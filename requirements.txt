@@ -1,0 +1,12 @@
+requests
+beautifulsoup4
+langchain
+langchain-community
+langchain-huggingface
+langchain-groq
+langgraph
+langchain-experimental
+neo4j
+chromadb
+python-dotenv
+sentence-transformers
