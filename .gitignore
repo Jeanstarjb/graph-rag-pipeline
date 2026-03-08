@@ -1,0 +1,30 @@
+# Environment variables (NEVER commit these!)
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Data files (large, generated locally - user must run scrapers themselves)
+data/raw_lore.txt
+data/chroma_db/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
