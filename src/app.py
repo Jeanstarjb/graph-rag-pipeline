@@ -3,9 +3,15 @@ import sys
 import os
 import time
 import base64
+import streamlit.components.v1 as components
 
 # Ensure src/ is importable
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+try:
+    from src.visualizer import generate_graph_html
+except ImportError:
+    generate_graph_html = None
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -271,6 +277,21 @@ st.markdown(
 )
 st.markdown("---")
 
+# ── Knowledge Graph Visualizer ────────────────────────────────────────────────
+with st.expander("👁️ View The Paths (Knowledge Graph)"):
+    st.markdown("Explore the structured intelligence network extracted from the archives.")
+    if st.button("Initialize Graph Visualization", use_container_width=True):
+        if generate_graph_html:
+            with st.spinner("Mapping the Paths..."):
+                graph_html_data = generate_graph_html()
+                if graph_html_data:
+                    components.html(graph_html_data, height=600)
+                else:
+                    st.error("Failed to generate the Knowledge Graph visualization.")
+        else:
+            st.error("Visualizer module is not available.")
+
+
 # ── Session State Init ────────────────────────────────────────────────────────
 if "messages" not in st.session_state:
     st.session_state.messages = [
@@ -281,11 +302,13 @@ if "messages" not in st.session_state:
                 "You are connected to the Survey Corps Intelligence Archive. "
                 "This terminal queries a hybrid knowledge system — structured relationship graphs "
                 "and semantic vector memory — to answer your questions about Attack on Titan lore.\n\n"
-                "**Example queries:**\n"
+                "**Try these queries:**\n"
                 "- *Who is Eren Yeager allied with?*\n"
-                "- *What happened during the fall of Shiganshina?*\n"
-                "- *What is the Founding Titan's power?*\n"
-                "- *Who are the Nine Titans?*"
+                "- *What Titans does Eren Yeager possess?*\n"
+                "- *Who did the Survey Corps kill?*\n"
+                "- *What is the Founding Titan?*\n"
+                "- *What happened at Shiganshina District?*\n"
+                "- *What is the relationship between Marley and Eldia?*"
             ),
             "route": None,
         }
