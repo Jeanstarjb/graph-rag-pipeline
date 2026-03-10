@@ -28,9 +28,15 @@ def get_graph():
     return Neo4jGraph(url=neo4j_url, username=neo4j_user, password=neo4j_password, database="93da935a")
 
 def get_vectorstore():
-    """Helper to connect to local Chroma DB."""
+    """Helper to connect to ChromaDB. Auto-builds from raw_lore.txt on first boot."""
+    persist_directory = "data/chroma_db"
+    if not os.path.exists(persist_directory) or not os.listdir(persist_directory):
+        print("   [VectorDB] ChromaDB not found — building from raw_lore.txt...")
+        from src.vector_db import build_vector_db
+        build_vector_db()
+        print("   [VectorDB] Build complete.")
     embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")
-    return Chroma(persist_directory="data/chroma_db", embedding_function=embeddings)
+    return Chroma(persist_directory=persist_directory, embedding_function=embeddings)
 
 def route_question(state: AgentState):
     """

@@ -16,8 +16,7 @@ venv/
 env/
 .venv/
 
-# Data files (large, generated locally - user must run scrapers themselves)
-data/raw_lore.txt
+# Data files (chroma_db is generated — rebuilt automatically on first boot)
 data/chroma_db/
 
 # IDE
